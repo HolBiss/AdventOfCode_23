@@ -1,3 +1,5 @@
+#https://adventofcode.com/2023/day/2
+
 #inputData = {([3,1,3], [3,1,3], [2,12,7], [1,5,4], [2,2,7]),
 #             ([1,1,19])}
 
@@ -108,9 +110,13 @@ inputText = ["Game 1: 3 green, 1 blue, 3 red; 3 blue, 1 green, 3 red; 2 red, 12 
 """
 
 singleInput = "Game 1: 3 green, 1 blue, 3 red; 3 blue, 1 green, 3 red; 2 red, 12 green, 7 blue; 1 red, 4 blue, 5 green; 7 green, 2 blue, 2 red"
+limit = [12, 13, 14]
 
-
-def gameStrToList(aStr: str):
+def gameStrToListStr(aStr: str):
+    """
+    vstup: "Game 1: 3 green, 1 blue, 3 red; 3 blue, 1 green, 3 red; 2 red, 12 green, 7 blue; 1 red, 4 blue, 5 green; 7 green, 2 blue, 2 red"
+    výstup: ['3 green, 1 blue, 3 red', '3 blue, 1 green, 3 red', '2 red, 12 green, 7 blue', '1 red, 4 blue, 5 green', '7 green, 2 blue, 2 red']
+    """
     iSingleSet = ""
     iSingleGame = []
     i = 0
@@ -129,6 +135,42 @@ def gameStrToList(aStr: str):
     iSingleGame.append(iSingleSet)
     return iSingleGame
 
+def listStrToListRGB(aListStr: str):
+    """
+    vstup: '1 red, 4 blue, 5 green'
+    výstup: [1, 5, 4]
+    """
+    retArr = [0, 0, 0]
+    iSplit = aListStr.split(", ")
+    for cPart in iSplit:
+        cPartSplit = cPart.split(" ")
+        if "red" in cPart:
+            retArr[0] = int(cPartSplit[0])
+        if "green" in cPart:
+            retArr[1] = int(cPartSplit[0])
+        if "blue" in cPart:
+            retArr[2] = int(cPartSplit[0])
+    return retArr
 
-singleGame = gameStrToList(singleInput)
-print(singleGame)
+
+def testGameLims(aRGB: list):
+    for i in range(3):
+        if aRGB[i] > limit[i]:
+            return False
+    return True
+
+
+def main():
+    sumID = 0
+    for i in range(len(inputText)):
+        singleGame = gameStrToListStr(inputText[i])
+        RGB = [int]
+        for cGamePart in singleGame:
+            RGB = listStrToListRGB(cGamePart)
+            OK = testGameLims(RGB)
+            print(f"set: {cGamePart} --> RGB: {RGB}; OK: {OK}")
+
+    #print(f"Suma OK ID: {sumID}")
+
+
+main()
