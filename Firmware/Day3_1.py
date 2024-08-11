@@ -17,16 +17,6 @@ fileName = "input/Day3.txt"
 """
 
 
-def createDataArr2D(aFile):
-    iDataMatrix = []
-    for row, cLine in enumerate(aFile):
-        dataRow = []
-        for col, char in enumerate(cLine):
-            dataRow.append(char)
-        iDataMatrix.append(dataRow[:-1])
-    return iDataMatrix
-
-
 def creatMatrixFromFile(aFileName: str):
     with open(aFileName, 'r') as file:
         lines = file.readlines()
@@ -60,27 +50,17 @@ def createNeighbourhood(aMatrix, aIndex):
 
 def matrixToLineStr(aMatrix):
     iStr = ""
-    for i in np.nditer(aMatrix):
+    for i in np.nditer(aMatrix):    # iterátor přes n rozměrné pole (matici)
         iStr += i
     return iStr
-
-
-def symbolInNeighbour(aMatrix):
-    for i in range(3):
-        for j in range(3):
-            if i == 1 and j == 1:
-                continue
-            if not aMatrix[i][j].isalnum() and aMatrix[i][j] != ".":
-                return True
-    return False
 
 
 def symbolInNeighbourStr(aStr: str):
     for char in aStr:
         if not char.isalnum() and char != ".":
             return True
-
     return False
+
 
 class Number:
     def __init__(self, val, startI, endI):
@@ -127,18 +107,12 @@ def getNumbersInLine(aRow):
             num.endI = i
             numbersInLine.append(num)
             started = False
-            #num.reset()
+
         # nenašel číslici -> pokračuje se na další
         else:
             i += 1
 
     return numbersInLine
-
-
-
-
-
-
 
 
 def main():
@@ -166,30 +140,6 @@ def main():
         sumParts += cPart
 
     print(f"Seznam součástek: {finalParts}. Jejich součet: {sumParts}")
-
-    """for col in range(len(dataMatrix[row])):
-        if 0 < row < len(dataMatrix)-1 and 0 < col < len(dataMatrix[row]):  # Prochází vše kromě hranice matice
-            if "0" < dataMatrix[row][col] < "9":    # narazil na číslo
-                validNumber = False
-                subMatrix = createSubMatrix(dataMatrix, [row, col]) # vytvoří 3x3 submatici kolem čísla
-
-                # zjistí jestli je na řádku soused taky číslice = je to pokračování stejného čísla
-                if subMatrix[1][0].isdigit() or subMatrix[1][2].isdigit():
-                    sameNumber = True
-
-                # vypíše všechny sousedy
-                neighbours = subMatrixToStr(subMatrix)
-                if symbolInNeighbour(subMatrix):
-                    validNumber = True
-                print(f"znak: {dataMatrix[row][col]} = Pokračování čísla: {sameNumber} --> sousedé: {neighbours} - Platné číslo: {validNumber}")
-                print(f"{subMatrix}\n")"""
-
-
-
-
-
-
-
 
 
 main()
