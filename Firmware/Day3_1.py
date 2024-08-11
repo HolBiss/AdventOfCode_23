@@ -2,12 +2,11 @@ import copy
 
 import numpy as np
 
-inputFile = open("input/Day3_test.txt")
-fileName = "input/Day3_test.txt"
+fileName = "input/Day3.txt"
 """
 467..114..
 ...*......
-..3...633.
+..35..633.
 ......#...
 617*......
 .....+.58.
@@ -103,7 +102,8 @@ def getNumbersInLine(aRow):
 
     started = False
     i = 0
-    while i < len(aRow):
+    rowLastIndex = len(aRow) - 1
+    while i < rowLastIndex:
         num = Number(0, 0, 0)
         # první číslice v číslu
         if not started and aRow[i].isdigit():
@@ -112,10 +112,15 @@ def getNumbersInLine(aRow):
             num.startI = i
             i += 1
 
+        if i >= rowLastIndex:
+            break
+
         # prochází číslici
         while started and aRow[i].isdigit():
             num.val = num.val * 10 + int(aRow[i])
             i += 1
+            if i > rowLastIndex:
+                break
 
         # konec číslice
         if started:
